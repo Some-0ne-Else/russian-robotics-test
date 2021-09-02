@@ -1,0 +1,44 @@
+{
+  "users": [
+    {
+      "id": "094787de-38c0-461a-97e0-dba4604af3f1",
+      "surname": "Иванов",
+      "name": "Сергей",
+      "middleName": "Петрович",
+      "roleId": "bed2260a-5cdb-40a7-b377-73002699bb74",
+      "birthday": "1971-04-23T00:00:00.000Z",
+      "birthPlace": "г. Краснодар",
+      "email": "ivanov@gmail.com",
+      "phoneNumber": "+7 (911) 277-10-19",
+      "registerDate": "2021-06-21T15:36:11.000Z",
+      "lastUpdate": "2021-07-03T16:31:55.000Z"
+    },
+    {
+      "id": "",
+      "surname": "Свиридов",
+      "name": "Валентин",
+      "middleName": "Владимирович",
+      "roleId": "f3914089-6a94-4f6f-b496-9a3eac441e95",
+      "birthday": "1966-02-15T00:00:00.000Z",
+      "birthPlace": "г. Краснодар",
+      "email": "sviridov@gmail.com",
+      "phoneNumber": "+7 (911) 111-32-56",
+      "registerDate": "2021-06-21T15:36:11.000Z",
+      "lastUpdate": "2021-07-03T16:31:55.000Z"
+    }
+  ],
+  "roles": [
+    {
+      "id": "bed2260a-5cdb-40a7-b377-73002699bb74",
+      "title": "Администратор"
+    },
+    {
+      "id": "f3914089-6a94-4f6f-b496-9a3eac441e95",
+      "title": "Пользователь"
+    },
+    {
+      "id": "cda009c3-529a-432c-9df6-7b5d83be63f3",
+      "title": "Гость"
+    }
+  ]
+}
