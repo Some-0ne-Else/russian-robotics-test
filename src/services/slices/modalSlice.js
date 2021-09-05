@@ -1,14 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const preloadedState = {
-  modalOpened: false,
+  editModalOpened: false,
+  deleteModalOpened: false,
+  addModalOpened: false,
 };
 
 const modalSlice = createSlice({
   name: 'modal',
   initialState: preloadedState,
   reducers: {
-    toggleModal: (state) => { state.modalOpened = !state.modalOpened; },
+    toggleModal: (state, action) => { state[`${action.payload}ModalOpened`] = !state[`${action.payload}ModalOpened`]; },
   },
 });
 

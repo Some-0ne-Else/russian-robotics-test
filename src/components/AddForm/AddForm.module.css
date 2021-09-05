@@ -1,18 +1,18 @@
-.edit-form {
+.add-form {
   display: flex;
   flex-direction: column;
   align-items: center;
   max-width: 560px;
 }
 
-.edit-form__input-wrapper {
+.add-form__input-wrapper {
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
   position: relative;
 }
 
-.edit-form__input {
+.add-form__input {
   width: 560px;
   height: 60px;
   border: 1px solid #D5D8E4;
@@ -30,11 +30,11 @@
   outline: none;
 }
 
-.edit-form__input_email {
+.add-form__input_email {
   padding: 20px 0 20px 20px;
 }
 
-.edit-form__input_short {
+.add-form__input_short {
   width: 264px;
   font-family: Inter;
   font-style: normal;
@@ -47,12 +47,12 @@
   color: #123FDD;
 }
 
-.edit-form__input_email:disabled {
+.add-form__input_email:disabled {
   color: rgba(93, 96, 108, 0.4);
   background-color: #fff;
 }
 
-.edit-form__select {
+.add-form__select {
   width: 560px;
   height: 60px;
   border: 1px solid #D5D8E4;
@@ -76,7 +76,7 @@
   background-position: right 25px top 50%, 0 0;
 }
 
-.edit-form__input-caption {
+.add-form__input-caption {
   font-family: Inter;
   font-style: normal;
   font-weight: bold;
@@ -91,7 +91,7 @@
   margin: 0px;
 }
 
-.edit-form__input-error {
+.add-form__input-error {
   position: absolute;
   font-family: Inter;
   font-style: normal;
@@ -105,13 +105,13 @@
   left: 0px;
 }
 
-.edit-form__date-wrapper {
+.add-form__date-wrapper {
   display: flex;
   justify-content: space-between;
   width: 560px;
 }
 
-.edit-form__submit-button {
+.add-form__submit-button {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -137,7 +137,7 @@
   transition: opacity 0.5s ease;
 }
 
-.edit-form__submit-button:hover {
+.add-form__submit-button:hover {
   opacity: 0.7;
 }
 

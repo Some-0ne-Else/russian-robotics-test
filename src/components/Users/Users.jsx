@@ -1,22 +1,32 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUsers } from '../../services/slices/userSlice';
+import { getUsers, sortUsers } from '../../services/slices/userSlice';
 import { toggleModal } from '../../services/slices/modalSlice';
 import User from '../User/User';
 import Modal from '../Modal/Modal';
+import AddForm from '../AddForm/AddForm';
 import EditForm from '../EditForm/EditForm';
+import DeleteForm from '../DeleteForm/DeleteForm';
+import { ADD_TYPE, EDIT_TYPE, DELETE_TYPE } from '../../utils/constants';
 import styles from './Users.module.css';
 import plusImg from '../../images/plus.png';
-import arrow from '../../images/arrow.png';
+import arrowUp from '../../images/arrowUp.png';
+import arrowDown from '../../images/arrowDown.png';
 
 function Users() {
   const dispatch = useDispatch();
-  const { users } = useSelector((store) => store.user);
-  const { modalOpened } = useSelector((store) => store.modal);
-  const toggle = () => {
-    dispatch(toggleModal());
+  const { users, sortedAsc } = useSelector((store) => store.user);
+  const {
+    addModalOpened,
+    editModalOpened,
+    deleteModalOpened,
+  } = useSelector((store) => store.modal);
+  const toggle = (type) => {
+    dispatch(toggleModal(type));
   };
-  console.log(users);
+  const sortToggle = () => {
+    dispatch(sortUsers());
+  };
   React.useEffect(() => {
     dispatch(getUsers());
   }, []);
@@ -24,16 +34,17 @@ function Users() {
     <main className={styles.users__main}>
       <div className={styles.users__header}>
         <p className={styles.users__title}>Пользователи</p>
-        <button className={styles['users__add-button']} type="button" onClick={toggle}>
+        <button className={styles['users__add-button']} type="button" onClick={() => toggle(ADD_TYPE)}>
           <p className={styles['users__button-text']}>Добавить нового пользователя</p>
           <img className={styles.users__image} src={plusImg} alt="" />
         </button>
       </div>
       <div className={styles.users__content}>
         <div className={styles.users__info}>
-          <button type="button" className={styles['users__sort-button']}>
+          <button type="button" className={styles['users__sort-button']} onClick={sortToggle}>
             <p className={styles['users__sort-button-text']}>Сортировать от А до Я</p>
-            <img src={arrow} alt="" className={styles['users__image-arrow']} />
+            {sortedAsc ? (<img src={arrowUp} alt="" className={styles['users__image-arrow']} />)
+              : (<img src={arrowDown} alt="" className={styles['users__image-arrow']} />)}
           </button>
           <p className={styles['users__user-counter']}>{`Всего пользователей: ${users.total}`}</p>
         </div>
@@ -67,9 +78,19 @@ function Users() {
           ))}
         </div>
       </div>
-      {modalOpened && (
-      <Modal title="Редактирование" onClose={toggle}>
+      {addModalOpened && (
+      <Modal title="Создание" onClose={() => toggle(ADD_TYPE)}>
+        <AddForm />
+      </Modal>
+      )}
+      {editModalOpened && (
+      <Modal title="Редактирование" onClose={() => toggle(EDIT_TYPE)}>
         <EditForm />
+      </Modal>
+      )}
+      {deleteModalOpened && (
+      <Modal title="Удаление" onClose={() => toggle(DELETE_TYPE)}>
+        <DeleteForm />
       </Modal>
       )}
     </main>

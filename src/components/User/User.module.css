@@ -31,6 +31,7 @@
     box-sizing: border-box;
     border: #DEE5EF 1px solid;
     padding: 0;
+    outline: none
 }
 
 .user__button-edit:hover {
@@ -48,6 +49,7 @@
     padding: 0;
     width: 60px;
     border-radius: 0px 8px 8px 0px;
+    outline: none;
 }
 .user__button-delete:hover {
     background-image: url('/src/images/delete_active.svg');
