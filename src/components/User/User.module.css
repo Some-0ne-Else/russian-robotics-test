@@ -1,0 +1,60 @@
+.user__text {
+    font-family: Inter;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 60px;
+    color: #5D606C;
+    border: #DEE5EF 1px solid;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    box-sizing: border-box;
+    height: 60px;
+    text-align: center;
+    margin: 0;
+}
+
+.user__text_rounded{
+    border-radius: 8px 0px 0px 8px;
+}
+.user__button-edit {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    border: none;
+    background-image: url('/src/images/edit.svg');
+    cursor: pointer;
+    box-sizing: border-box;
+    border: #DEE5EF 1px solid;
+    padding: 0;
+}
+
+.user__button-edit:hover {
+    background-image: url('/src/images/edit_active.svg');
+}
+
+.user__button-delete {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    background-image: url('/src/images/delete.svg');
+    border: #DEE5EF 1px solid;
+    padding: 0;
+    width: 60px;
+    border-radius: 0px 8px 8px 0px;
+}
+.user__button-delete:hover {
+    background-image: url('/src/images/delete_active.svg');
+}
+/* .user__text:first-of-type{
+    border-radius: 8px;
+}
+.user__text:nth-child(2n){
+    border-radius: 8px;
+} */

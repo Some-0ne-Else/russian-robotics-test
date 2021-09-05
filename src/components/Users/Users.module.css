@@ -9,6 +9,7 @@
     background: #F5F6F9;
     margin: 0 auto;
     padding: 0 112px;
+    box-sizing: border-box;
 }
 
 .users__title {
@@ -20,7 +21,7 @@
     color: #112A85;
 }
 
-.users__button {
+.users__add-button {
     text-transform: uppercase;
     width: 314px;
     height: 44px;
@@ -28,14 +29,15 @@
     border-radius: 8px;
     border: none;
     cursor: pointer;
-    transition: opacity 0.5s;
+    transition: opacity 0.5s ease;
     display: flex;
     justify-content: center;
     align-items: center;
+    outline: none;
 }
 
-.users__button:hover {
-    opacity: 0.8;
+.users__add-button:hover {
+    opacity: 0.7;
 }
 
 .users__button-text {
@@ -55,6 +57,7 @@
     max-width: 1440px;
     padding: 0 112px;
     margin: 0 auto;
+    box-sizing: border-box;
 }
 
 .users__info {
@@ -95,7 +98,9 @@
 
 .users__table {
     display: grid;
-    grid-template-columns: repeat(10, 1fr);
+    grid-template-columns: 158px 133px 119px 1fr 112px 147px 103px 92px 60px 60px;
+    row-gap: 12px;
+    margin-top: 40px;
 }
 
 .users__table-caption {
@@ -104,7 +109,8 @@
     font-weight: bold;
     font-size: 12px;
     line-height: 20px;
-    display: flex;
-    align-items: center;
     color: #B7BAC5;
+    text-align: center;
+    margin: 0;
+    display: block;
 }

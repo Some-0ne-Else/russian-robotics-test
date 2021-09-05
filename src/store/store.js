@@ -1,13 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
+import logger from 'redux-logger';
 import userReducer from '../services/slices/userSlice';
-import contactsReducer from '../services/slices/contactsSlice';
+import modalReducer from '../services/slices/modalSlice';
 
 const store = configureStore({
   reducer: {
     user: userReducer,
-    contacts: contactsReducer,
+    modal: modalReducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
   devTools: process.env.NODE_ENV !== 'production',
 });
 
