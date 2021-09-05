@@ -1,9 +1,11 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
+import { format, parseISO } from 'date-fns';
 import NumberFormat from 'react-number-format';
-import { getRoles } from '../../services/slices/userSlice';
+import { getUsers, getRoles, updateUser } from '../../services/slices/userSlice';
+import { toggleModal } from '../../services/slices/modalSlice';
+import { EDIT_TYPE } from '../../utils/constants';
 import styles from './EditForm.module.css';
 
 function EditForm() {
@@ -13,13 +15,36 @@ function EditForm() {
   const {
     register,
     handleSubmit,
+    formState,
+    setValue,
     control,
     formState: { errors },
   } = useForm({
-    // reValidateMode: 'onBlur',
-    // mode: 'onTouched',
+    defaultValues: {
+      name: selectedUser.name,
+      surname: selectedUser.surname,
+      middleName: selectedUser.middleName,
+      roleId: selectedUser.role.id,
+      birthday: format(parseISO(selectedUser.birthday), 'uu-MM-dd'),
+      birthPlace: selectedUser.birthPlace,
+      email: selectedUser.email,
+      phoneNumber: selectedUser.phoneNumber,
+      registerDate: format(parseISO(selectedUser.registerDate), 'uu-MM-dd'),
+      lastUpdate: format(parseISO(selectedUser.lastUpdate), 'uu-MM-dd'),
+    },
   });
-  const onSubmit = (data) => console.log(data);
+  const [selectValue, setSelectValue] = React.useState(selectedUser.role.id);
+  const handleChange = (e) => {
+    setValue('roleId', e.target.value, { shouldValidate: true });
+    setSelectValue(e.target.value);
+  };
+  const onSubmit = (data) => {
+    data.id = selectedUser.id;
+    data.lastUpdate = new Date();
+    dispatch(updateUser(data))
+      .then(() => dispatch((getUsers())));
+    dispatch(toggleModal(EDIT_TYPE));
+  };
   React.useEffect(() => {
     dispatch(getRoles());
   }, []);
@@ -29,7 +54,6 @@ function EditForm() {
         <p className={styles['edit-form__input-caption']}>Имя</p>
         <input
           placeholder="Имя"
-          defaultValue={selectedUser.name}
           {...register('name', { required: true })}
           className={styles['edit-form__input']}
         />
@@ -39,7 +63,6 @@ function EditForm() {
         <p className={styles['edit-form__input-caption']}>Фамилия</p>
         <input
           placeholder="Фамилия"
-          defaultValue={selectedUser.surname}
           {...register('surname', { required: true })}
           className={styles['edit-form__input']}
         />
@@ -49,7 +72,6 @@ function EditForm() {
         <p className={styles['edit-form__input-caption']}>Отчество</p>
         <input
           placeholder="Отчество"
-          defaultValue={selectedUser.middleName}
           {...register('middleName', { required: true })}
           className={styles['edit-form__input']}
         />
@@ -59,8 +81,8 @@ function EditForm() {
         <p className={styles['edit-form__input-caption']}>Роль</p>
         <select
           placeholder="Роль"
-          defaultValue={selectedUser.role.id}
-          {...register('role', { required: true })}
+          value={selectValue}
+          onChange={(e) => handleChange(e)}
           className={styles['edit-form__select']}
         >
           {roles?.collection?.map((el) => (
@@ -89,7 +111,7 @@ function EditForm() {
       <div className={styles['edit-form__input-wrapper']}>
         <p className={styles['edit-form__input-caption']} />
         <input
-          disabled
+          readOnly
           placeholder="name@domain.com"
           {...register('email')}
           className={`${styles['edit-form__input']} ${styles['edit-form__input_email']}`}
@@ -100,7 +122,8 @@ function EditForm() {
         <Controller
           render={({ field: { onChange, value } }) => (
             <NumberFormat
-              format="+7 (###)-###-##-##"
+              format="+# (###)-###-##-##"
+              placeholder="+7(111)-123-44-55"
               mask="_"
               onChange={onChange}
               value={value}
@@ -117,7 +140,8 @@ function EditForm() {
         <div className={styles['edit-form__input-wrapper']}>
           <p className={styles['edit-form__input-caption']}>Дата регистрации</p>
           <input
-            disabled
+            readOnly
+            type="date"
             placeholder="01.01.2000"
             {...register('registerDate')}
             className={`${styles['edit-form__input']} ${styles['edit-form__input_short']}`}
@@ -126,14 +150,15 @@ function EditForm() {
         <div className={styles['edit-form__input-wrapper']}>
           <p className={styles['edit-form__input-caption']}>Последнее изменение</p>
           <input
-            disabled
+            readOnly
+            type="date"
             placeholder="01.01.2000"
-            {...register('registerDate')}
+            {...register('lastUpdate')}
             className={`${styles['edit-form__input']} ${styles['edit-form__input_short']}`}
           />
         </div>
       </div>
-      <button type="submit" className={styles['edit-form__submit-button']}>
+      <button type="submit" disabled={formState.isSubmitting} className={styles['edit-form__submit-button']}>
         Сохранить изменения в профиле
       </button>
     </form>
