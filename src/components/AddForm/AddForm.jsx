@@ -1,7 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
-// import { format, parseISO } from 'date-fns';
 import NumberFormat from 'react-number-format';
 import { getUsers, getRoles, createUser } from '../../services/slices/userSlice';
 import { toggleModal } from '../../services/slices/modalSlice';
@@ -24,7 +23,7 @@ function AddForm() {
   });
 
   const [selectValue, setSelectValue] = React.useState('');
-  const role = register('roleId', { required: true });
+  const role = register('roleId', { required: 'Ошибка: это поле обязательно' });
   const handleChange = (e) => {
     setValue('roleId', e.target.value, { shouldValidate: true });
     setSelectValue(e.target.value);
@@ -37,37 +36,39 @@ function AddForm() {
     dispatch((getUsers()));
     dispatch(toggleModal(ADD_TYPE));
   };
+  console.log(errors);
   React.useEffect(() => {
-    dispatch(getRoles());
+    dispatch(getRoles())
+      .then((res) => setValue('roleId', res.payload.collection[0].id));
   }, []);
   return (
-    <form className={styles['add-form']} onSubmit={handleSubmit(onSubmit)}>
+    <form className={styles['add-form']} onSubmit={handleSubmit(onSubmit)} noValidate>
       <div className={styles['add-form__input-wrapper']}>
         <p className={styles['add-form__input-caption']}>Имя</p>
         <input
           placeholder="Имя"
-          {...register('name', { required: true })}
+          {...register('name', { required: 'Ошибка: это поле обязательно' })}
           className={styles['add-form__input']}
         />
-        {errors.name && <span className={styles['add-form__input-error']}>Это поле обязательно</span>}
+        {errors.name && <span className={styles['add-form__input-error']}>{errors.name.message}</span>}
       </div>
       <div className={styles['add-form__input-wrapper']}>
         <p className={styles['add-form__input-caption']}>Фамилия</p>
         <input
           placeholder="Фамилия"
-          {...register('surname', { required: true })}
+          {...register('surname', { required: 'Ошибка: это поле обязательно' })}
           className={styles['add-form__input']}
         />
-        {errors.surname && <span className={styles['add-form__input-error']}>Это поле обязательно</span>}
+        {errors.surname && <span className={styles['add-form__input-error']}>{errors.surname.message}</span>}
       </div>
       <div className={styles['add-form__input-wrapper']}>
         <p className={styles['add-form__input-caption']}>Отчество</p>
         <input
           placeholder="Отчество"
-          {...register('middleName', { required: true })}
+          {...register('middleName', { required: 'Ошибка: это поле обязательно' })}
           className={styles['add-form__input']}
         />
-        {errors.middleName && <span className={styles['add-form__input-error']}>Это поле обязательно</span>}
+        {errors.middleName && <span className={styles['add-form__input-error']}>{errors.middleName.message}</span>}
       </div>
       <div className={styles['add-form__input-wrapper']}>
         <p className={styles['add-form__input-caption']}>Роль</p>
@@ -83,33 +84,41 @@ function AddForm() {
             <option key={el.id} value={el.id}>{el.title}</option>
           ))}
         </select>
-        {errors.roleId && <span className={styles['add-form__input-error']}>Это поле обязательно</span>}
+        {errors.roleId && <span className={styles['add-form__input-error']}>{errors.roleId.message}</span>}
       </div>
       <div className={styles['add-form__input-wrapper']}>
         <p className={styles['add-form__input-caption']}>Дата рождения</p>
         <input
           type="date"
-          {...register('birthday', { required: true })}
+          {...register('birthday', { required: 'Ошибка: это поле обязательно' })}
           className={styles['add-form__input']}
         />
-        {errors.birthday && <span className={styles['add-form__input-error']}>Это поле обязательно</span>}
+        {errors.birthday && <span className={styles['add-form__input-error']}>{errors.birthday.message}</span>}
       </div>
       <div className={styles['add-form__input-wrapper']}>
         <p className={styles['add-form__input-caption']}>Место рождения</p>
         <input
           placeholder="Место рождения"
-          {...register('birthPlace', { required: true })}
+          {...register('birthPlace', { required: 'Ошибка: это поле обязательно' })}
           className={styles['add-form__input']}
         />
-        {errors.birthPlace && <span className={styles['add-form__input-error']}>Это поле обязательно</span>}
+        {errors.birthPlace && <span className={styles['add-form__input-error']}>{errors.birthPlace.message}</span>}
       </div>
       <div className={styles['add-form__input-wrapper']}>
         <p className={styles['add-form__input-caption']}>Email</p>
         <input
+          type="email"
           placeholder="name@domain.com"
-          {...register('email')}
+          {...register('email', {
+            required: 'Ошибка: это поле обязательно',
+            validate: (value) => {
+              const reg = new RegExp(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+              return reg.test(value) || 'Ошибка: это поле заполнено некорректно';
+            },
+          })}
           className={`${styles['add-form__input']} ${styles['add-form__input_email']}`}
         />
+        {errors.email && <span className={styles['add-form__input-error']}>{errors.email.message}</span>}
       </div>
       <div className={styles['add-form__input-wrapper']}>
         <p className={styles['add-form__input-caption']}>Номер телефона</p>
@@ -126,15 +135,15 @@ function AddForm() {
           )}
           control={control}
           name="phoneNumber"
-          rules={{ required: true }}
+          rules={{ required: 'Ошибка: это поле обязательно' }}
         />
-        {errors.phoneNumber && <span className={styles['add-form__input-error']}>Это поле обязательно</span>}
+        {errors.phoneNumber && <span className={styles['add-form__input-error']}>{errors.phoneNumber.message}</span>}
       </div>
       <div className={styles['add-form__date-wrapper']}>
         <div className={styles['add-form__input-wrapper']}>
           <p className={styles['add-form__input-caption']}>Дата регистрации</p>
           <input
-            readOnly
+            disabled
             type="date"
             placeholder="01.01.2000"
             {...register('registerDate')}
@@ -144,7 +153,7 @@ function AddForm() {
         <div className={styles['add-form__input-wrapper']}>
           <p className={styles['add-form__input-caption']}>Последнее изменение</p>
           <input
-            readOnly
+            disabled
             type="date"
             placeholder="01.01.2000"
             {...register('lastUpdate')}

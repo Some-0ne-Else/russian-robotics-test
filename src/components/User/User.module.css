@@ -14,8 +14,8 @@
     white-space: nowrap;
     box-sizing: border-box;
     height: 60px;
-    text-align: center;
     margin: 0;
+    padding: 0 10px;
 }
 
 .user__text_rounded{
@@ -54,9 +54,3 @@
 .user__button-delete:hover {
     background-image: url('/src/images/delete_active.svg');
 }
-/* .user__text:first-of-type{
-    border-radius: 8px;
-}
-.user__text:nth-child(2n){
-    border-radius: 8px;
-} */
