@@ -1,11 +1,16 @@
 # Тестовое задания для Russian Robotics
 
 ## Запуск проекта
-### Бэкенд в директории mini-server
-### `yarn run start`
-### Фронтенд по умолчанию запускается на 3001 порту
-### `npm start`
+### 1. Бэкенд распологается в директории mini-server
+### Запуск: `yarn run start`
+### 2. Фронтенд
+* #### Установить зависимости:  `npm i`
 
+* #### Запустить проект: `npm start`
+
+##### По умолчанию проект запускается на 3001 порту.
+
+ ###### На MacOS возможно потребуется удалить ампрерсанд из строки "start": "set PORT=3001 && react-scripts start", в package.json
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
