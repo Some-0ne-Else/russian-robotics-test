@@ -125,8 +125,8 @@ function AddForm() {
         <Controller
           render={({ field: { onChange, value } }) => (
             <NumberFormat
-              format="+# (###)-###-##-##"
-              placeholder="+7(111)-123-44-55"
+              format="+# (###)###-##-##"
+              placeholder="+7(111)123-44-55"
               mask="_"
               onChange={onChange}
               value={value}
@@ -135,7 +135,13 @@ function AddForm() {
           )}
           control={control}
           name="phoneNumber"
-          rules={{ required: 'Ошибка: это поле обязательно' }}
+          rules={{
+            required: 'Ошибка: это поле обязательно',
+            validate: (value) => {
+              const reg = new RegExp(/\+\d\s\(\d+\)\d+-\d+-\d{2}/g);
+              return reg.test(value) || 'Ошибка: это поле заполнено некорректно';
+            },
+          }}
         />
         {errors.phoneNumber && <span className={styles['add-form__input-error']}>{errors.phoneNumber.message}</span>}
       </div>

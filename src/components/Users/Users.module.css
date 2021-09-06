@@ -99,7 +99,7 @@
 
 .users__table {
     display: grid;
-    grid-template-columns: 158px 133px 119px 1fr 112px 147px 103px 92px 60px 60px;
+    grid-template-columns: 158px 133px 119px 1fr 112px 156px 103px 92px 60px 60px;
     row-gap: 12px;
     margin-top: 40px;
 }

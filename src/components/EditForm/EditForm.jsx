@@ -55,7 +55,10 @@ function EditForm() {
         <p className={styles['edit-form__input-caption']}>Имя</p>
         <input
           placeholder="Имя"
-          {...register('name', { required: 'Ошибка: это поле обязательно' })}
+          {...register('name', {
+            required: 'Ошибка: это поле обязательно',
+            minLength: 3 || 'Ошибка: минимум 3 символа',
+          })}
           className={styles['edit-form__input']}
         />
         {errors.name && <span className={styles['edit-form__input-error']}>{errors.name.message}</span>}
@@ -134,8 +137,8 @@ function EditForm() {
         <Controller
           render={({ field: { onChange, value } }) => (
             <NumberFormat
-              format="+# (###)-###-##-##"
-              placeholder="+7(111)-123-44-55"
+              format="+# (###)###-##-##"
+              placeholder="+7(111)123-44-55"
               mask="_"
               onChange={onChange}
               value={value}
@@ -144,7 +147,13 @@ function EditForm() {
           )}
           control={control}
           name="phoneNumber"
-          rules={{ required: 'Ошибка: это поле обязательно' }}
+          rules={{
+            required: 'Ошибка: это поле обязательно',
+            validate: (value) => {
+              const reg = new RegExp(/\+\d\s\(\d+\)\d+-\d+-\d{2}/g);
+              return reg.test(value) || 'Ошибка: это поле заполнено некорректно';
+            },
+          }}
         />
         {errors.phoneNumber && <span className={styles['edit-form__input-error']}>{errors.phoneNumber.message}</span>}
       </div>
